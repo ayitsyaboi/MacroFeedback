@@ -103,15 +103,26 @@ function CreateMacroFeedbackOptions()
     f:SetBackdrop({
         bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
         edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
-        tile = true, tileSize = 32, edgeSize = 32,
-        insets = { left = 11, right = 12, top = 12, bottom = 11 }
+        tile = true,
+        tileSize = 32,
+        edgeSize = 32,
+        insets = {
+            left = 11,
+            right = 12,
+            top = 12,
+            bottom = 11
+        }
     })
 
     f:SetMovable(true)
     f:EnableMouse(true)
     f:RegisterForDrag("LeftButton")
-    f:SetScript("OnDragStart", function() f:StartMoving() end)
-    f:SetScript("OnDragStop", function() f:StopMovingOrSizing() end)
+    f:SetScript("OnDragStart", function()
+        f:StartMoving()
+    end)
+    f:SetScript("OnDragStop", function()
+        f:StopMovingOrSizing()
+    end)
 
     -- Title text
     local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -126,7 +137,9 @@ function CreateMacroFeedbackOptions()
     close:SetNormalTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Up")
     close:SetPushedTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Down")
     close:SetHighlightTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Highlight")
-    close:SetScript("OnClick", function() f:Hide() end)
+    close:SetScript("OnClick", function()
+        f:Hide()
+    end)
 
     -- Font size label
     local sliderLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -153,141 +166,166 @@ function CreateMacroFeedbackOptions()
     shadowCheckbox:SetPoint("TOPLEFT", slider, "BOTTOMLEFT", 0, -20)
     shadowCheckbox:SetChecked(MacroFeedbackDB.shadow)
     shadowCheckbox:SetScript("OnClick", function()
-    MacroFeedbackDB.shadow = shadowCheckbox:GetChecked()
-end)
+        MacroFeedbackDB.shadow = shadowCheckbox:GetChecked()
+    end)
 
- local shadowLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
- shadowLabel:SetPoint("LEFT", shadowCheckbox, "RIGHT", 5, 0)
- shadowLabel:SetText("Enable Shadow")
+    local shadowLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    shadowLabel:SetPoint("LEFT", shadowCheckbox, "RIGHT", 5, 0)
+    shadowLabel:SetText("Enable Shadow")
 
- -- Outline checkbox
- local outlineCheckbox = CreateFrame("CheckButton", nil, f, "OptionsCheckButtonTemplate")
- outlineCheckbox:SetPoint("TOPLEFT", shadowCheckbox, "BOTTOMLEFT", 0, -10)
- outlineCheckbox:SetChecked(MacroFeedbackDB.outline)
- outlineCheckbox:SetScript("OnClick", function()
-    MacroFeedbackDB.outline = outlineCheckbox:GetChecked()
-end)
- -- Duration label and value
- local durationLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
- durationLabel:SetPoint("TOPLEFT", outlineCheckbox, "BOTTOMLEFT", 0, -20)
- durationLabel:SetText("Time on Screen:")
+    -- Outline checkbox
+    local outlineCheckbox = CreateFrame("CheckButton", nil, f, "OptionsCheckButtonTemplate")
+    outlineCheckbox:SetPoint("TOPLEFT", shadowCheckbox, "BOTTOMLEFT", 0, -10)
+    outlineCheckbox:SetChecked(MacroFeedbackDB.outline)
+    outlineCheckbox:SetScript("OnClick", function()
+        MacroFeedbackDB.outline = outlineCheckbox:GetChecked()
+    end)
+    -- Duration label and value
+    local durationLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    durationLabel:SetPoint("TOPLEFT", outlineCheckbox, "BOTTOMLEFT", 0, -20)
+    durationLabel:SetText("Time on Screen:")
 
- local durationValue = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
- durationValue:SetPoint("LEFT", durationLabel, "RIGHT", 10, 0)
- durationValue:SetText(string.format("%.1f", MacroFeedbackDB.duration))
+    local durationValue = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    durationValue:SetPoint("LEFT", durationLabel, "RIGHT", 10, 0)
+    durationValue:SetText(string.format("%.1f", MacroFeedbackDB.duration))
 
- local durationSlider = CreateFrame("Slider", nil, f)
- durationSlider:SetWidth(200)
- durationSlider:SetHeight(16)
- durationSlider:SetPoint("TOPLEFT", durationLabel, "BOTTOMLEFT", 0, -10)
- durationSlider:SetOrientation("HORIZONTAL")
- durationSlider:SetMinMaxValues(0.2, 3.0)
- durationSlider:SetValueStep(0.1)
- durationSlider:SetValue(MacroFeedbackDB.duration)
- durationSlider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
- durationSlider:SetBackdrop({
-    bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
-    edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
-    tile = true, tileSize = 8, edgeSize = 8,
-    insets = { left = 3, right = 3, top = 6, bottom = 6 }
- })
- durationSlider:SetScript("OnValueChanged", function()
-    local val = durationSlider:GetValue()
-    MacroFeedbackDB.duration = val
-    durationValue:SetText(string.format("%.1f", val))
- end)
+    local durationSlider = CreateFrame("Slider", nil, f)
+    durationSlider:SetWidth(200)
+    durationSlider:SetHeight(16)
+    durationSlider:SetPoint("TOPLEFT", durationLabel, "BOTTOMLEFT", 0, -10)
+    durationSlider:SetOrientation("HORIZONTAL")
+    durationSlider:SetMinMaxValues(0.2, 3.0)
+    durationSlider:SetValueStep(0.1)
+    durationSlider:SetValue(MacroFeedbackDB.duration)
+    durationSlider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
+    durationSlider:SetBackdrop({
+        bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
+        edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
+        tile = true,
+        tileSize = 8,
+        edgeSize = 8,
+        insets = {
+            left = 3,
+            right = 3,
+            top = 6,
+            bottom = 6
+        }
+    })
+    durationSlider:SetScript("OnValueChanged", function()
+        local val = durationSlider:GetValue()
+        MacroFeedbackDB.duration = val
+        durationValue:SetText(string.format("%.1f", val))
+    end)
 
--- X position
-local xLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-xLabel:SetPoint("TOPLEFT", durationSlider, "BOTTOMLEFT", 0, -20)
-xLabel:SetText("X Position:")
+    -- X position
+    local xLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    xLabel:SetPoint("TOPLEFT", durationSlider, "BOTTOMLEFT", 0, -20)
+    xLabel:SetText("X Position:")
 
-local xValue = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-xValue:SetPoint("LEFT", xLabel, "RIGHT", 10, 0)
-xValue:SetText(tostring(MacroFeedbackDB.anchorX))
+    local xValue = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    xValue:SetPoint("LEFT", xLabel, "RIGHT", 10, 0)
+    xValue:SetText(tostring(MacroFeedbackDB.anchorX))
 
-local xSlider = CreateFrame("Slider", nil, f)
-xSlider:SetWidth(200)
-xSlider:SetHeight(16)
-xSlider:SetPoint("TOPLEFT", xLabel, "BOTTOMLEFT", 0, -10)
-xSlider:SetOrientation("HORIZONTAL")
-xSlider:SetMinMaxValues(-300, 300)
-xSlider:SetValueStep(1)
-xSlider:SetValue(MacroFeedbackDB.anchorX)
-xSlider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
-xSlider:SetBackdrop({
-    bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
-    edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
-    tile = true, tileSize = 8, edgeSize = 8,
-    insets = { left = 3, right = 3, top = 6, bottom = 6 }
-})
-xSlider:SetScript("OnValueChanged", function()
-    local val = xSlider:GetValue()
-    MacroFeedbackDB.anchorX = val
-    xValue:SetText(string.format("%d", val))
-end)
+    local xSlider = CreateFrame("Slider", nil, f)
+    xSlider:SetWidth(200)
+    xSlider:SetHeight(16)
+    xSlider:SetPoint("TOPLEFT", xLabel, "BOTTOMLEFT", 0, -10)
+    xSlider:SetOrientation("HORIZONTAL")
+    xSlider:SetMinMaxValues(-300, 300)
+    xSlider:SetValueStep(1)
+    xSlider:SetValue(MacroFeedbackDB.anchorX)
+    xSlider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
+    xSlider:SetBackdrop({
+        bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
+        edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
+        tile = true,
+        tileSize = 8,
+        edgeSize = 8,
+        insets = {
+            left = 3,
+            right = 3,
+            top = 6,
+            bottom = 6
+        }
+    })
+    xSlider:SetScript("OnValueChanged", function()
+        local val = xSlider:GetValue()
+        MacroFeedbackDB.anchorX = val
+        xValue:SetText(string.format("%d", val))
+    end)
 
--- Y position
-local yLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-yLabel:SetPoint("TOPLEFT", xSlider, "BOTTOMLEFT", 0, -20)
-yLabel:SetText("Y Position:")
+    -- Y position
+    local yLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    yLabel:SetPoint("TOPLEFT", xSlider, "BOTTOMLEFT", 0, -20)
+    yLabel:SetText("Y Position:")
 
-local yValue = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-yValue:SetPoint("LEFT", yLabel, "RIGHT", 10, 0)
-yValue:SetText(tostring(MacroFeedbackDB.anchorY))
+    local yValue = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    yValue:SetPoint("LEFT", yLabel, "RIGHT", 10, 0)
+    yValue:SetText(tostring(MacroFeedbackDB.anchorY))
 
-local ySlider = CreateFrame("Slider", nil, f)
-ySlider:SetWidth(200)
-ySlider:SetHeight(16)
-ySlider:SetPoint("TOPLEFT", yLabel, "BOTTOMLEFT", 0, -10)
-ySlider:SetOrientation("HORIZONTAL")
-ySlider:SetMinMaxValues(-300, 300)
-ySlider:SetValueStep(1)
-ySlider:SetValue(MacroFeedbackDB.anchorY)
-ySlider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
-ySlider:SetBackdrop({
-    bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
-    edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
-    tile = true, tileSize = 8, edgeSize = 8,
-    insets = { left = 3, right = 3, top = 6, bottom = 6 }
-})
-ySlider:SetScript("OnValueChanged", function()
-    local val = ySlider:GetValue()
-    MacroFeedbackDB.anchorY = val
-    yValue:SetText(string.format("%d", val))
-end)
+    local ySlider = CreateFrame("Slider", nil, f)
+    ySlider:SetWidth(200)
+    ySlider:SetHeight(16)
+    ySlider:SetPoint("TOPLEFT", yLabel, "BOTTOMLEFT", 0, -10)
+    ySlider:SetOrientation("HORIZONTAL")
+    ySlider:SetMinMaxValues(-300, 300)
+    ySlider:SetValueStep(1)
+    ySlider:SetValue(MacroFeedbackDB.anchorY)
+    ySlider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
+    ySlider:SetBackdrop({
+        bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
+        edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
+        tile = true,
+        tileSize = 8,
+        edgeSize = 8,
+        insets = {
+            left = 3,
+            right = 3,
+            top = 6,
+            bottom = 6
+        }
+    })
+    ySlider:SetScript("OnValueChanged", function()
+        local val = ySlider:GetValue()
+        MacroFeedbackDB.anchorY = val
+        yValue:SetText(string.format("%d", val))
+    end)
 
+    local outlineLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    outlineLabel:SetPoint("LEFT", outlineCheckbox, "RIGHT", 5, 0)
+    outlineLabel:SetText("Enable Outline")
 
-local outlineLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-outlineLabel:SetPoint("LEFT", outlineCheckbox, "RIGHT", 5, 0)
-outlineLabel:SetText("Enable Outline")
+    slider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
+    slider:SetBackdrop({
+        bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
+        edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
+        tile = true,
+        tileSize = 8,
+        edgeSize = 8,
+        insets = {
+            left = 3,
+            right = 3,
+            top = 6,
+            bottom = 6
+        }
+    })
 
-slider:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
-slider:SetBackdrop({
-    bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
-    edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
-    tile = true, tileSize = 8, edgeSize = 8,
-    insets = { left = 3, right = 3, top = 6, bottom = 6 }
-})
+    slider:SetScript("OnValueChanged", function()
+        local value = slider:GetValue()
+        if type(value) == "number" then
+            MacroFeedbackDB.fontSize = value
+            sliderValue:SetText(string.format("%d", value))
 
-slider:SetScript("OnValueChanged", function()
-    local value = slider:GetValue()
-    if type(value) == "number" then
-        MacroFeedbackDB.fontSize = value
-        sliderValue:SetText(string.format("%d", value))
-
-        if currentTextFrame and currentTextFrame.text then
-            local fontFlags = MacroFeedbackDB.outline and "OUTLINE" or ""
-            currentTextFrame.text:SetFont("Fonts\\FRIZQT__.TTF", value, fontFlags)
+            if currentTextFrame and currentTextFrame.text then
+                local fontFlags = MacroFeedbackDB.outline and "OUTLINE" or ""
+                currentTextFrame.text:SetFont("Fonts\\FRIZQT__.TTF", value, fontFlags)
+            end
+        else
+            sliderValue:SetText("Invalid")
         end
-    else
-        sliderValue:SetText("Invalid")
-    end
-end)
+    end)
     f:Hide()
 end
-
-
 
 SLASH_MACROFEEDBACK1 = "/mfb"
 SlashCmdList["MACROFEEDBACK"] = function()
