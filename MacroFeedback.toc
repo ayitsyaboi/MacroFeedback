@@ -1,0 +1,5 @@
+## Interface: 11200
+## Title: MacroFeedback
+## SavedVariables: MacroFeedbackDB
+## Notes: Shows custom floating text when called from macros
+MacroFeedback.lua
